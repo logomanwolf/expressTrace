@@ -1,10 +1,10 @@
 /**
  * 
  */
-package controller;
+package prepro;
 
 /**
- * @author 龚友诚
+ * @author 龚友�?
  * 
  */
 public interface ICityExtraction {

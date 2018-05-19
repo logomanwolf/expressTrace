@@ -1,6 +1,7 @@
 package po;
 
 import java.util.List;
+
 import po.Trace;
 public class Root {
 	private String LogisticCode;
@@ -72,5 +73,5 @@ public class Root {
 	public boolean getSuccess() {
 		return this.Success;
 	}
-
+	
 }

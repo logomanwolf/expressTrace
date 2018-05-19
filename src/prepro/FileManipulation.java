@@ -8,9 +8,12 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
 
@@ -31,8 +34,10 @@ public class FileManipulation implements IFile {
 				return false;
 			}
 		FileWriter fw;
+		
 		try {
 			fw = new FileWriter(file);
+			System.out.println(fw.getEncoding());
 			BufferedWriter out = new BufferedWriter(fw);
 			out.write(content);
 			out.close();
@@ -51,13 +56,41 @@ public class FileManipulation implements IFile {
 		String content = "";
 		File file = new File("D:/junior/expressTrace/WebRoot/json/" + name);
 		try {
-			content = FileUtils.readFileToString(file);
+			content = FileUtils.readFileToString(file, "gb2312");
 			System.out.println("Contents of file: " + content);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		return content;
+	}
+
+	public String readAjax(HttpServletRequest request) {
+
+		try {
+			request.setCharacterEncoding("utf-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new InputStreamReader(
+					request.getInputStream(), "UTF-8"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		String line = null;
+		StringBuilder sb = new StringBuilder();
+		try {
+			while ((line = br.readLine()) != null) {
+				sb.append(line);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		String data = sb.toString();
+		return data;
 	}
 
 }

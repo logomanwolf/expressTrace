@@ -31,10 +31,16 @@ body,html {
 	<div id="l-map"></div>
 	<div id="r-result">
 		<input type="button" value="批量地址解析" onclick="bdGEO()" />
-		<div id="result"></div>
+		<form action="getPoint" method="post">
+			<input type="button" value="传到后台" onclick="sendMess()" />
+			<div id="result"></div>
+		</form>
+
+
 	</div>
 </body>
 </html>
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 	// 百度地图API功能
 	var map = new BMap.Map("l-map");
@@ -42,14 +48,29 @@ body,html {
 	map.enableScrollWheelZoom(true);
 	var index = 0;
 	var myGeo = new BMap.Geocoder();
-	var adds = [ "包河区金寨路1号（金寨路与望江西路交叉口）", "庐阳区凤台路209号（凤台路与蒙城北路交叉口）",
+	var sendD = [];
+	var allData = ${data};
+	//alert(allData[0].logisticCode);
+	var adds = [];
+	for (var i = 0; i < allData.length; i++) {
+		var t = allData[i].traces;
+
+		for (var j = 0; j < t.length; j++) {
+			//	alert(allData[i].traces[j].AcceptStation);
+			adds.push(allData[i].traces[j].acceptStation);
+		}
+	}
+	// alert(allData[0].traces[0].AcceptStation);
+	// alert(adds);
+	/*   var adds= [ "包河区金寨路1号（金寨路与望江西路交叉口）", "庐阳区凤台路209号（凤台路与蒙城北路交叉口）",
 			"蜀山区金寨路217号(近安医附院公交车站)", "蜀山区梅山路10号(近安徽饭店) ",
 			"蜀山区 长丰南路159号铜锣湾广场312室", "合肥市寿春路93号钱柜星乐町KTV（逍遥津公园对面）",
-			"庐阳区长江中路177号", "新站区胜利路89" ];
+			"庐阳区长江中路177号", "新站区胜利路89" ]; */
 	function bdGEO() {
 		var add = adds[index];
 		geocodeSearch(add);
 		index++;
+
 	}
 	function geocodeSearch(add) {
 		if (index < adds.length) {
@@ -60,16 +81,38 @@ body,html {
 				document.getElementById("result").innerHTML += index + "、"
 						+ add + ":" + point.lng + "," + point.lat + "</br>";
 				var address = new BMap.Point(point.lng, point.lat);
-				addMarker(address, new BMap.Label(index + ":" + add, {
+				/* addMarker(address, new BMap.Label(index + ":" + add, {
 					offset : new BMap.Size(20, -10)
-				}));
+				})); */
+				sendD.push(address);
+
 			}
-		}, "合肥市");
+		});
 	}
 	// 编写自定义函数,创建标注
 	function addMarker(point, label) {
 		var marker = new BMap.Marker(point);
 		map.addOverlay(marker);
 		marker.setLabel(label);
+	}
+	function sendMess() {
+		alert(JSON.stringify(sendD));
+		$.ajax({
+			async : false,
+			type : "POST",
+			url : "getPoint.do",
+			contentType : "application/json; charset=utf-8",
+			data : JSON.stringify(sendD),
+			/* data : {
+				"type" : "ys"
+			}, */
+			dataType : "json",
+			success : function(data) {
+				alert("success");
+			},
+			error : function(data) {
+				//alert("failed");
+			},
+		});
 	}
 </script>

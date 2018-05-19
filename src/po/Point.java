@@ -1,18 +1,8 @@
 package po;
 
-public class TraceAndPoint {
-	private Trace trace;
-	private String lat;
-	private String lng;
+import java.util.ArrayList;
 
-	public Trace getTrace() {
-		return trace;
-	}
-
-	public void setTrace(Trace trace) {
-		this.trace = trace;
-	}
-
+public class Point {
 	public String getLat() {
 		return lat;
 	}
@@ -27,6 +17,18 @@ public class TraceAndPoint {
 
 	public void setLng(String lng) {
 		this.lng = lng;
+	}
+
+	private String lat;
+	private String lng;
+
+	public Point(String lat, String lng) {
+		super();
+		this.lat = lat;
+		this.lng = lng;
+	}
+	public Point(){
+		super();
 	}
 
 }

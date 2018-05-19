@@ -1,22 +1,36 @@
 package po;
 
-public class RootAndPoint extends Root {
-	private String lat;
-	private String lng;
+import java.util.ArrayList;
 
-	public String getLat() {
-		return lat;
+public class RootAndPoint {
+	private Root root;
+	private ArrayList<String> lats;
+	private ArrayList<String> lngs;
+	public ArrayList<String> getLats() {
+		return lats;
 	}
 
-	public void setLat(String lat) {
-		this.lat = lat;
+	public void setLats(ArrayList<String> lats) {
+		this.lats = lats;
 	}
 
-	public String getLng() {
-		return lng;
+	public ArrayList<String> getLngs() {
+		return lngs;
 	}
 
-	public void setLng(String lng) {
-		this.lng = lng;
+	public void setLngs(ArrayList<String> lngs) {
+		this.lngs = lngs;
 	}
+
+	
+
+	public Root getRoot() {
+		return root;
+	}
+
+	public void setRoot(Root root) {
+		this.root = root;
+	}
+
+	
 }

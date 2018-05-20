@@ -64,6 +64,21 @@ public class FileManipulation implements IFile {
 
 		return content;
 	}
+	
+	
+	public String readJson(String name,String encoding) {
+		// TODO Auto-generated method stub
+		String content = "";
+		File file = new File("D:/junior/expressTrace/WebRoot/json/" + name);
+		try {
+			content = FileUtils.readFileToString(file, encoding);
+			System.out.println("Contents of file: " + content);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return content;
+	}
 
 	public String readAjax(HttpServletRequest request) {
 

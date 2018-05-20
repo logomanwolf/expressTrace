@@ -1,30 +1,24 @@
 package controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.UnsupportedEncodingException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.PageContext;
 
-import com.alibaba.fastjson.JSON;
-
-import po.Root;
-import po.RootAndPoint;
-import po.Trace;
 import prepro.FileManipulation;
 
-public class MakePoint extends HttpServlet {
+public class Temp extends HttpServlet {
 
 	/**
 	 * Constructor of the object.
 	 */
-	public MakePoint() {
+	public Temp() {
 		super();
 	}
 
@@ -53,22 +47,36 @@ public class MakePoint extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		response.setContentType("text/json");
-		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		String data = new FileManipulation().readJson("step1.json","utf-8");
-		List<Root> roots = JSON.parseArray(data, Root.class);
-		roots = roots.subList(0, 6);
-		String str=JSON.toJSONString(roots);
-		new FileManipulation().WriteJson("less.json", str);
-		/*ArrayList<Trace> data1=new ArrayList<Trace>();
-		for (int i = 0; i < 100; i++) {
-			System.out.println(roots.get(i).getTraces().get(0));
-		}*/
-	//	System.out.println(JSON.toJSONString(roots));
-		request.getSession().setAttribute("data", str);
-		RequestDispatcher rd = request.getRequestDispatcher("address.jsp");
-		rd.forward(request, response);
+		try {
+			request.setCharacterEncoding("utf-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new InputStreamReader(
+					request.getInputStream(), "UTF-8"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		String line = null;
+		StringBuilder sb = new StringBuilder();
+		try {
+			while ((line = br.readLine()) != null) {
+				sb.append(line);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		String data = sb.toString();
+		new FileManipulation().WriteJson("lngandLatbcbC.json", data);
+		//PrintWriter out = response.getWriter();
+		out.write("zzz");
+		out.flush();
+		out.close();
 	}
 
 	/**
@@ -88,20 +96,7 @@ public class MakePoint extends HttpServlet {
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
-		out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
-		out.println("<HTML>");
-		out.println("  <HEAD><TITLE>A Servlet</TITLE></HEAD>");
-		out.println("  <BODY>");
-		out.print("    This is ");
-		out.print(this.getClass());
-		out.println(", using the POST method");
-		out.println("  </BODY>");
-		out.println("</HTML>");
-		out.flush();
-		out.close();
+		doGet(request, response);
 	}
 
 	/**

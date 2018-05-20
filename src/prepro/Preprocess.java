@@ -6,7 +6,10 @@ import java.util.ArrayList;
 
 //import org.apache.tomcat.util.http.fileupload.FileUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 import org.apache.commons.io.FileUtils;
 
@@ -80,23 +83,38 @@ public class Preprocess implements Process {
 		}
 
 		JSONArray jsonArray = new JSONArray();
-
 		for (RootAndPoint rap : rootAndPList) {
 			int i = 0;
 			for (Trace tce : rap.getRoot().getTraces()) {
-				JSONObject jo = new JSONObject();
-				jo.put("name", tce.getAcceptStation());
-				jo.put("point", new Point(rap.getLats().get(i), rap.getLngs()
-						.get(i)));
-				jsonArray.add(jo);
+				Vector<Double> v=new Vector<Double>();
+				v.add(Double.parseDouble(rap.getLngs().get(i)));
+				v.add(Double.parseDouble(rap.getLats().get(i)));
+				Map<String,Vector<Double>> map=new HashMap<String,Vector<Double>>();
+				map.put( tce.getAcceptStation(),v);
+				jsonArray.add(map);
 				i++;
 			}
 		}
 
-		/*String rootsStr = JSON.toJSONString(rootAndPList);
-		System.out.println(rootsStr);*/
+		/*
+		 * JSONArray bjsonArray = new JSONArray(); for (RootAndPoint rap :
+		 * rootAndPList) { JSONArray jsonArray = new JSONArray(); int i = 0; for
+		 * (int j = 0; j + 1 < rap.getRoot().getTraces().size(); j++) { Trace
+		 * trS = rap.getRoot().getTraces().get(j); Trace trE =
+		 * rap.getRoot().getTraces().get(j + 1); JSONObject joS = new
+		 * JSONObject(); JSONObject joE = new JSONObject(); joS.put("name",
+		 * trS.getAcceptStation()); joS.put("value", 50); joE.put("name",
+		 * trE.getAcceptStation()); joE.put("value", 50); jsonArray.add(joS);
+		 * i++; } bjsonArray.add(jsonArray); }
+		 */
+
+		/*
+		 * String rootsStr = JSON.toJSONString(rootAndPList);
+		 * System.out.println(rootsStr);
+		 */
 		String rootsStr = JSON.toJSONString(jsonArray);
 		System.out.println(rootsStr);
 		new FileManipulation().WriteJson("address.json", rootsStr);
 	}
+
 }

@@ -80,6 +80,52 @@ html,body,#map {
 	<div id="map"></div>
 	<script src="js/main.min.js"></script>
 	<script>
+		var dd = [ {
+			"温州市(苍南县城分部)" : [ 120.445543, 27.434436 ]
+		}, {
+			"温州市(温州中转部)" : [ 120.690635, 28.002838 ]
+		}, {
+			"芜湖市(芜湖中转部)" : [ 118.384108, 31.36602 ]
+		}, {
+			"郑州市(豫北中转)" : [ 120.445543, 27.434436 ]
+		}, {
+			"濮阳市(濮阳县)" : [ 120.690635, 28.002838 ]
+		}, {
+			"北京市(北京)" : [ 120.445543, 27.434436 ]
+		}, {
+			"南充市(南充中转站)" : [ 120.690635, 28.002838 ]
+		}, {
+			"成都市(成都双流)" : [ 118.384108, 31.36602 ]
+		}, {
+			"东莞市(东莞中心)" : [ 120.445543, 27.434436 ]
+		}, {
+			"荆州市(荆州中转部)" : [ 120.690635, 28.002838 ]
+		}, {
+			"荆门市(钟祥)" : [ 118.384108, 31.36602 ]
+		}, {
+			"东莞市(东莞中心)" : [ 120.445543, 27.434436 ]
+		}, {
+			"武汉市(武汉中转部)" : [ 120.690635, 28.002838 ]
+		}, {
+			"黄冈市(黄冈团风县)" : [ 118.384108, 31.36602 ]
+		}, {
+			"金华市(金华中转部)" : [ 120.445543, 27.434436 ]
+		}, {
+			"深圳市(深圳中心)" : [ 120.690635, 28.002838 ]
+		}, {
+			"深圳市(罗湖笋岗)" : [ 118.384108, 31.36602 ]
+		} ];
+		var map1 = {};
+		var x = dd.length;
+		for (var i = 0; i < x; i++) {
+			for ( var jsonname in dd[i]) {
+				map1[jsonname] = dd[i][jsonname];
+			}
+		}
+		console.log((map1["金华市(金华中转部)"]));
+		//console.log((map1["深圳市(罗湖笋岗)"]));
+		//console.log((map1["jsonname"]));
+
 		var map = L.map('map');
 		var baseLayers = {
 			"高德地图" : L
@@ -139,9 +185,14 @@ html,body,#map {
 		var chartsContainer = overlay.getEchartsContainer();
 		var myChart = overlay.initECharts(chartsContainer);
 		//var data=${data};
-		
-		
-		 var geoCoordMap = {
+
+		var geoCoordMap = {
+			'温州市(苍南县城分部)' : [ 120.445543, 27.434436 ],
+			'温州市(温州中转部)' : [ 120.690635, 28.002838 ],
+			'芜湖市(芜湖中转部)' : [ 118.384108, 31.36602 ],
+			'郑州市(豫北中转)' : [ 113.649644, 34.75661 ],
+			'濮阳市(濮阳县)' : [ 115.156602, 35.592287 ],
+			'北京市(北京)' : [ 120.445543, 27.434436 ],
 			'上海' : [ 121.4648, 31.2891 ],
 			'东莞' : [ 113.8953, 22.901 ],
 			'东营' : [ 118.7073, 37.5513 ],
@@ -256,59 +307,32 @@ html,body,#map {
 			'阳泉' : [ 113.4778, 38.0951 ],
 			'青岛' : [ 120.4651, 36.3373 ],
 			'韶关' : [ 113.7964, 24.7028 ]
-		}; 
+		};
 
 		var BJData = [ [ {
-			name : '北京'
+			name : '温州市(苍南县城分部)',
+			value:10
 		}, {
-			name : '上海',
-			value : 95
-		} ], [ {
-			name : '北京'
-		}, {
-			name : '广州',
-			value : 90
-		} ], [ {
-			name : '北京'
-		}, {
-			name : '大连',
-			value : 80
-		} ], [ {
-			name : '北京'
-		}, {
-			name : '南宁',
-			value : 70
-		} ], [ {
-			name : '北京'
-		}, {
-			name : '南昌',
-			value : 60
-		} ], [ {
-			name : '北京'
-		}, {
-			name : '拉萨',
-			value : 50
-		} ], [ {
-			name : '北京'
-		}, {
-			name : '长春',
-			value : 40
-		} ], [ {
-			name : '北京'
-		}, {
-			name : '包头',
-			value : 30
-		} ], [ {
-			name : '北京'
-		}, {
-			name : '重庆',
-			value : 20
-		} ], [ {
-			name : '北京'
-		}, {
-			name : '常州',
+			name : '温州市(温州中转部)',
 			value : 10
-		} ] ];
+		} ], [ {
+			name : '温州市(温州中转部)'
+		}, {
+			name : '芜湖市(芜湖中转部)',
+			value : 10
+		} ], [ {
+			name : '芜湖市(芜湖中转部)'
+		}, {
+			name : '郑州市(豫北中转)',
+			value : 10
+		} ], [ {
+			name : '郑州市(豫北中转)'
+		}, {
+			name : '濮阳市(濮阳县)',
+			value : 10
+		} ]
+
+		];
 
 		var SHData = [ [ {
 			name : '上海'
@@ -335,31 +359,6 @@ html,body,#map {
 		}, {
 			name : '长春',
 			value : 60
-		} ], [ {
-			name : '上海'
-		}, {
-			name : '重庆',
-			value : 50
-		} ], [ {
-			name : '上海'
-		}, {
-			name : '长沙',
-			value : 40
-		} ], [ {
-			name : '上海'
-		}, {
-			name : '北京',
-			value : 30
-		} ], [ {
-			name : '上海'
-		}, {
-			name : '丹东',
-			value : 20
-		} ], [ {
-			name : '上海'
-		}, {
-			name : '大连',
-			value : 10
 		} ] ];
 
 		var GZData = [ [ {
@@ -414,10 +413,8 @@ html,body,#map {
 			value : 10
 		} ] ];
 
-		
-		
 		//飞机图标动画的效果
-		var planePath = 'path://M1705.06,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705.06,1318.313z';
+		var planePath = 'image://img/pot1.png';
 
 		var convertData = function(data) {
 			var res = [];
@@ -436,7 +433,7 @@ html,body,#map {
 			return res;
 		};
 
-		var color = [ '#a6c84c', '#ffa022', '#46bee9' ];
+		var color = [ '#ffffff', '#ffa022', '#46bee9' ];
 		var series = [];
 		[ [ '北京', BJData ], [ '上海', SHData ], [ '广州', GZData ] ]
 				.forEach(function(item, i) {
@@ -445,11 +442,12 @@ html,body,#map {
 						type : 'lines',
 						zlevel : 1,
 						effect : {
-							show : true,
+							show : false,
 							period : 6,
 							trailLength : 0.7,
 							color : '#fff',
-							symbolSize : 3
+							symbolSize : 1,
+							constantSpeed : 20000
 						},
 						lineStyle : {
 							normal : {
@@ -468,7 +466,8 @@ html,body,#map {
 							period : 6,
 							trailLength : 0,
 							symbol : planePath,
-							symbolSize : 15
+							symbolSize : 15,
+							constantSpeed : 2000
 						},
 						lineStyle : {
 							normal : {

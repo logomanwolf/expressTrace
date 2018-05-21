@@ -49,15 +49,16 @@ body,html {
 	var index = 0;
 	var myGeo = new BMap.Geocoder();
 	var sendD = [];
+	var sendA = {};
 	var allData = ${data};
 	//alert(allData[0].logisticCode);
 	var adds = [];
 	for (var i = 0; i < allData.length; i++) {
-		var t = allData[i].traces;
+		var t = allData[i].acceptStations;
 
 		for (var j = 0; j < t.length; j++) {
 			//	alert(allData[i].traces[j].AcceptStation);
-			adds.push(allData[i].traces[j].acceptStation);
+			adds.push(t[j]);
 		}
 	}
 	// alert(allData[0].traces[0].AcceptStation);
@@ -84,7 +85,11 @@ body,html {
 				/* addMarker(address, new BMap.Label(index + ":" + add, {
 					offset : new BMap.Size(20, -10)
 				})); */
+				var p=[];
+				p.push(point.lng,point.lat);
 				sendD.push(address);
+				
+				sendA[add]=p;
 
 			}
 		});
@@ -96,13 +101,13 @@ body,html {
 		marker.setLabel(label);
 	}
 	function sendMess() {
-		alert(JSON.stringify(sendD));
+		alert(JSON.stringify(sendA));
 		$.ajax({
 			async : false,
 			type : "POST",
 			url : "getPoint.do",
 			contentType : "application/json; charset=utf-8",
-			data : JSON.stringify(sendD),
+			data : JSON.stringify(sendA),
 			/* data : {
 				"type" : "ys"
 			}, */
@@ -114,5 +119,7 @@ body,html {
 				//alert("failed");
 			},
 		});
+		
+		
 	}
 </script>

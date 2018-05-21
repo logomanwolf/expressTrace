@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ import com.alibaba.fastjson.JSON;
 
 import po.Root;
 import po.RootAndPoint;
+import po.SimpleStyle;
 import po.Trace;
 import prepro.FileManipulation;
 
@@ -56,10 +58,27 @@ public class MakePoint extends HttpServlet {
 		response.setContentType("text/json");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
-		String data = new FileManipulation().readJson("step1.json","utf-8");
-		List<Root> roots = JSON.parseArray(data, Root.class);
-		roots = roots.subList(0, 6);
-		String str=JSON.toJSONString(roots);
+		String data = new FileManipulation().readJson("simplestep1.json","utf-8");
+		List<SimpleStyle> roots = (ArrayList<SimpleStyle>) JSON.parseArray(data, SimpleStyle.class);
+		roots =  roots.subList(50, 100);
+		List<SimpleStyle> newSimpleRoot=new ArrayList<SimpleStyle>();
+		for(int i=0;i<roots.size();i++){
+			SimpleStyle simpleStyle=roots.get(i);
+			SimpleStyle newSimple=new SimpleStyle();
+			ArrayList<String> newAccpts=new ArrayList<String>();
+			newAccpts.add(simpleStyle.getAcceptStations().get(0));
+			for(int j=0;j<simpleStyle.getAcceptStations().size();j++){
+				if(j+1<simpleStyle.getAcceptStations().size())
+				if(!simpleStyle.getAcceptStations().get(j).equals(simpleStyle.getAcceptStations().get(j+1)))
+				newAccpts.add(simpleStyle.getAcceptStations().get(j+1));	
+			}
+			newSimple.setAcceptStations(newAccpts);
+			newSimpleRoot.add(newSimple);
+		}
+		
+		
+		
+		String str=JSON.toJSONString(newSimpleRoot);
 		new FileManipulation().WriteJson("less.json", str);
 		/*ArrayList<Trace> data1=new ArrayList<Trace>();
 		for (int i = 0; i < 100; i++) {

@@ -37,7 +37,7 @@ public class FileManipulation implements IFile {
 		
 		try {
 			fw = new FileWriter(file);
-			System.out.println(fw.getEncoding());
+			System.out.println(filename+": "+fw.getEncoding());
 			BufferedWriter out = new BufferedWriter(fw);
 			out.write(content);
 			out.close();
@@ -57,7 +57,7 @@ public class FileManipulation implements IFile {
 		File file = new File("D:/junior/expressTrace/WebRoot/json/" + name);
 		try {
 			content = FileUtils.readFileToString(file, "gb2312");
-			System.out.println("Contents of file: " + content);
+			System.out.println(name+": " + content);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -72,7 +72,7 @@ public class FileManipulation implements IFile {
 		File file = new File("D:/junior/expressTrace/WebRoot/json/" + name);
 		try {
 			content = FileUtils.readFileToString(file, encoding);
-			System.out.println("Contents of file: " + content);
+			//System.out.println(name+":" + content);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

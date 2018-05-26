@@ -14,7 +14,7 @@ public class Simple {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		String content = new FileManipulation().readJson("less.json");
-		// System.out.println("content:="+content);
+		 System.out.println("content:="+content);
 		List<SimpleStyle> roots = JSON.parseArray(content, SimpleStyle.class);
 		JSONArray bigarray=new JSONArray();
 		for(SimpleStyle list :roots){
@@ -39,8 +39,12 @@ public class Simple {
 		}
 		String rootsStr = JSON.toJSONString(bigarray);
 		System.out.println(rootsStr);
-		new FileManipulation().WriteJson("finalpath.json", rootsStr);
+		new FileManipulation().WriteJson("finalpath2.json", rootsStr);
 		
 	}
+	
+
+	
+	
 
 }

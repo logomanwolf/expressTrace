@@ -54,13 +54,10 @@ body,html {
 	//alert(allData[0].logisticCode);
 	var adds = [];
 	for (var i = 0; i < allData.length; i++) {
-		var t = allData[i].acceptStations;
-
-		for (var j = 0; j < t.length; j++) {
 			//	alert(allData[i].traces[j].AcceptStation);
-			adds.push(t[j]);
+			adds.push(allData[i]);
 		}
-	}
+	
 	// alert(allData[0].traces[0].AcceptStation);
 	// alert(adds);
 	/*   var adds= [ "包河区金寨路1号（金寨路与望江西路交叉口）", "庐阳区凤台路209号（凤台路与蒙城北路交叉口）",
@@ -75,7 +72,7 @@ body,html {
 	}
 	function geocodeSearch(add) {
 		if (index < adds.length) {
-			setTimeout(window.bdGEO, 400);
+			setTimeout(window.bdGEO, 1000);
 		}
 		myGeo.getPoint(add, function(point) {
 			if (point) {
@@ -101,7 +98,7 @@ body,html {
 		marker.setLabel(label);
 	}
 	function sendMess() {
-		alert(JSON.stringify(sendA));
+		//alert(JSON.stringify(sendA));
 		$.ajax({
 			async : false,
 			type : "POST",

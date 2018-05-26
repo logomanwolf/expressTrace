@@ -15,6 +15,7 @@ import javax.servlet.jsp.PageContext;
 
 import com.alibaba.fastjson.JSON;
 
+import dao.AddressDao;
 import po.Root;
 import po.RootAndPoint;
 import po.SimpleStyle;
@@ -58,33 +59,9 @@ public class MakePoint extends HttpServlet {
 		response.setContentType("text/json");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
-		String data = new FileManipulation().readJson("simplestep1.json","utf-8");
-		List<SimpleStyle> roots = (ArrayList<SimpleStyle>) JSON.parseArray(data, SimpleStyle.class);
-		roots =  roots.subList(50, 100);
-		List<SimpleStyle> newSimpleRoot=new ArrayList<SimpleStyle>();
-		for(int i=0;i<roots.size();i++){
-			SimpleStyle simpleStyle=roots.get(i);
-			SimpleStyle newSimple=new SimpleStyle();
-			ArrayList<String> newAccpts=new ArrayList<String>();
-			newAccpts.add(simpleStyle.getAcceptStations().get(0));
-			for(int j=0;j<simpleStyle.getAcceptStations().size();j++){
-				if(j+1<simpleStyle.getAcceptStations().size())
-				if(!simpleStyle.getAcceptStations().get(j).equals(simpleStyle.getAcceptStations().get(j+1)))
-				newAccpts.add(simpleStyle.getAcceptStations().get(j+1));	
-			}
-			newSimple.setAcceptStations(newAccpts);
-			newSimpleRoot.add(newSimple);
-		}
-		
-		
-		
-		String str=JSON.toJSONString(newSimpleRoot);
-		new FileManipulation().WriteJson("less.json", str);
-		/*ArrayList<Trace> data1=new ArrayList<Trace>();
-		for (int i = 0; i < 100; i++) {
-			System.out.println(roots.get(i).getTraces().get(0));
-		}*/
-	//	System.out.println(JSON.toJSONString(roots));
+        List<String> datas=new AddressDao().selectSomeNaughtyAddress();
+        String str=JSON.toJSONString(datas);
+        System.out.println(str);
 		request.getSession().setAttribute("data", str);
 		RequestDispatcher rd = request.getRequestDispatcher("address.jsp");
 		rd.forward(request, response);

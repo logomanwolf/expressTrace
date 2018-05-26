@@ -31,6 +31,27 @@
     <servlet-name>getPoint2</servlet-name>
     <servlet-class>controller.getPoint2</servlet-class>
   </servlet>
+  <servlet>
+    <description>用来表示处理address数据导入数据库</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>AddressDo</servlet-name>
+    <servlet-class>controller.AddressDo</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>fromTimeToTime</servlet-name>
+    <servlet-class>controller.fromTimeToTime</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>根据时间来返回数据</display-name>
+    <servlet-name>selectByTime</servlet-name>
+    <servlet-class>controller.selectByTime</servlet-class>
+  </servlet>
+
+
+
 
 
 
@@ -55,6 +76,18 @@
   <servlet-mapping>
     <servlet-name>getPoint2</servlet-name>
     <url-pattern>/getPoint2.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AddressDo</servlet-name>
+    <url-pattern>/address.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>fromTimeToTime</servlet-name>
+    <url-pattern>/fromTimeToTime.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>selectByTime</servlet-name>
+    <url-pattern>/selectByTime</url-pattern>
   </servlet-mapping>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

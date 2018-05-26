@@ -21,4 +21,6 @@ public class Trace {
 		return this.AcceptTime;
 	}
 
+	
+
 }

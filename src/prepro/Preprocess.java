@@ -41,6 +41,14 @@ public class Preprocess implements Process {
 	}
 
     public static void main(String[] args) {
+        AddressDao addressDao=new AddressDao();
+        String time[]={"2018-04-25 02:00:00","2018-04-25 04:00:00","2018-04-25 06:00:00","2018-04-25 08:00:00","2018-04-25 10:00:00","2018-04-25 12:00:00","2018-04-25 14:00:00","2018-04-25 16:00:00","2018-04-25 18:00:00","2018-04-25 20:00:00","2018-04-25 22:00:00"};
+        for(String tim:time){
+        List<lujingData> lujing= addressDao.selectTimePath(tim);
+        String content=JSON.toJSONString(lujing);
+        new FileManipulation().WriteJson(tim+"json", content);
+        }
+        
         
 	}
 

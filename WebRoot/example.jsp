@@ -72,57 +72,19 @@ html,body,#map {
 	}
 }
 </style>
+<link rel="stylesheet" href="css/sliderStyle.css">
+<link rel="stylesheet" href="css/header.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/switch.css">
 </head>
 <body>
-	
+
 	<div id="map"></div>
+
 	<script src="js/main.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="http://echarts.baidu.com/doc/example/timelineOption.js"></script>
 	<script>
-		/* var dd = [ {
-			"温州市(苍南县城分部)" : [ 120.445543, 27.434436 ]
-		}, {
-			"温州市(温州中转部)" : [ 120.690635, 28.002838 ]
-		}, {
-			"芜湖市(芜湖中转部)" : [ 118.384108, 31.36602 ]
-		}, {
-			"郑州市(豫北中转)" : [ 120.445543, 27.434436 ]
-		}, {
-			"濮阳市(濮阳县)" : [ 120.690635, 28.002838 ]
-		}, {
-			"北京市(北京)" : [ 120.445543, 27.434436 ]
-		}, {
-			"南充市(南充中转站)" : [ 120.690635, 28.002838 ]
-		}, {
-			"成都市(成都双流)" : [ 118.384108, 31.36602 ]
-		}, {
-			"东莞市(东莞中心)" : [ 120.445543, 27.434436 ]
-		}, {
-			"荆州市(荆州中转部)" : [ 120.690635, 28.002838 ]
-		}, {
-			"荆门市(钟祥)" : [ 118.384108, 31.36602 ]
-		}, {
-			"东莞市(东莞中心)" : [ 120.445543, 27.434436 ]
-		}, {
-			"武汉市(武汉中转部)" : [ 120.690635, 28.002838 ]
-		}, {
-			"黄冈市(黄冈团风县)" : [ 118.384108, 31.36602 ]
-		}, {
-			"金华市(金华中转部)" : [ 120.445543, 27.434436 ]
-		}, {
-			"深圳市(深圳中心)" : [ 120.690635, 28.002838 ]
-		}, {
-			"深圳市(罗湖笋岗)" : [ 118.384108, 31.36602 ]
-		} ];
-		var map1 = {};
-		var x = dd.length;
-		for (var i = 0; i < x; i++) {
-			for ( var jsonname in dd[i]) {
-				map1[jsonname] = dd[i][jsonname];
-			}
-		}
-		console.log((map1["金华市(金华中转部)"])); */
-		//console.log((map1["深圳市(罗湖笋岗)"]));
-		//console.log((map1["jsonname"]));
 		var map = L.map('map');
 		var baseLayers = {
 			"高德地图" : L
@@ -183,82 +145,275 @@ html,body,#map {
 		var myChart = overlay.initECharts(chartsContainer);
 		//var data=${data};
 
-		options2 = 
-			   [
-			        {
-			            backgroundColor: '#ffffff',
-			    title : {
-			        text: '各抽检环节异议情况分析',
-			        subtext: '2017年'
-			    },
-			    tooltip: {
-			        trigger: 'item',
-			        formatter: "{a} <br/>{b}: {c} ({d}%)",
+		var geoCoordMap = ${address};
 
-			    },
-			    legend: {
-			        
-			        orient: 'vertical',
-			        x: 'right',
-			       itemWidth: 14,
-			        itemHeight: 14,
-			        align: 'left',
-			    
-			    },
-			    series: [
-			        {
-			            name:'各主体业态检查批次比例',
-			            type:'pie',
-			            hoverAnimation: false,
-			            legendHoverLink:false,
-			            radius: ['31%', '35%'],
-			            color: ['#915872', '#3077b7', '#9a8169'
-			],
-			            label: {
-			                normal: {
-			                    position: 'inner'
-			                }
-			            },
-			            labelLine: {
-			                normal: {
-			                    show: false
-			                },
-			               
-			            },
-			            tooltip: {
-			               show:false,
-			               
-			               
-			            },
-			            data:[ {value:20392, name:''},
-			                {value:13922, name:''},
-			                {value:40392, name:''}]
-			        },
-			        {
-			            name:'量化分级评定信息统计',
-			            type:'pie',
-			            radius: ['35%', '65%'],
-			            color: ['#d74e67', '#0092ff', '#eba954'],
-			            label: {
-			                normal: {
-			                    formatter: '{b}\n{d}%'
-			                },
-			          
-			            },
-			            data:[
-			                {value:20392, name:'生产环节'},
-			                {value:13922, name:'餐饮环节'},
-			                {value:40392, name:'销售环节'}]
-			        }
-			    ]
-			}
-			];
+		var datap1 = ${data};
+		var datap2 = ${data2};
+		var datap3 = ${data3};
+		var datap4 = ${data4};
+		var datap5 = ${data5};
+		var datap6 = ${data6};
+		var datap7 = ${data7};
+		var datap8 = ${data8};
+		var datap9 = ${data9};
+		var datap10 = ${data10};
+		var datap11 = ${data11};
+		var datap12 = ${data12};
+		var datap = [ datap1, datap2, datap3, datap4, datap5, datap6, datap7,
+				datap8, datap9, datap10, datap11, datap12 ];
+		var BJData = datap[0];
+		var SHData = datap[1];
+		var GZData = datap[2];
 
 		//飞机图标动画的效果
-		overlay.setOption(options2);
-		
-		
-		
+		var planePath = 'image://img/pot1.png';
+
+		var convertData = function(data) {
+			var res = [];
+			for (var i = 0; i < data.length; i++) {
+				var dataItem = data[i];
+				var fromCoord = geoCoordMap[dataItem[0].name];
+				var toCoord = geoCoordMap[dataItem[1].name];
+				if (fromCoord && toCoord) {
+					res.push([ {
+						coord : fromCoord
+					}, {
+						coord : toCoord
+					}, {
+						name : dataItem[0].name,
+						LogisticCode : dataItem[0].LogisticCode,
+						time : dataItem[0].time
+					}, {
+						name : dataItem[1].name,
+						time : dataItem[1].time
+					} ]);
+				}
+			}
+			return res;
+		};
+
+		var color = [ '#ffffff', '#ffa022', '#46bee9' ];
+		var series = [];
+		for (var i = 0; i < 12; i++) {
+			var series1 = [];
+			series.push(series1);
+		}
+
+		for (var j = 0; j < datap.length; j++) {
+			var datapitem = datap[j];
+			datapitem
+					.forEach(function(item, i) {
+						//这里的series之所以要弄三个是因为要显示三种类型的图
+						series[j]
+								.push(
+										{
+											name : ' Top10',
+											type : 'lines',
+											zlevel : 2,
+											effect : {
+												show : true,
+												period : 6,
+												trailLength : 0,
+												symbol : planePath,
+												symbolSize : 1,
+												constantSpeed : 10
+											},
+
+											lineStyle : {
+												normal : {
+													color : color[(i + 1) % 3],
+													width : 1,
+													opacity : 0.4,
+													curveness : 0.2
+												}
+											},
+											label : {
+												normal : {
+													formatter : '{b}',
+													position : 'right',
+													show : false
+												},
+												emphasis : {
+													show : false
+												}
+											},
+											data : convertData(item)
+										},
+										{
+											name : ' Top10',
+											type : 'scatter',
+											coordinateSystem : 'geo',
+											zlevel : 2,
+											rippleEffect : {
+												brushType : 'stroke'
+											},
+											label : {
+												normal : {
+													show : false,
+													position : 'right',
+													formatter : '{b}'
+												}
+											},
+											tooltip : {
+												trigger : 'item',
+												formatter : function(data) {
+													
+													if (data.value[2] >= 50) {
+														var daily=data.value[2]+"";
+														return '<div style="border-bottom: 1px solid #555;padding-bottom: 5px; margin-bottom: 5px;">'
+																+ data.name
+														+'</div>' + '<div>日接单量：'
+																+ daily+'</div>';
+													} else {
+														
+														return '<div>'
+																+ data.name;
+														+'</div>';
+														;
+													}
+												}
+											},
+											symbolSize : function(val) {
+												return val[2] / 10;
+											},
+											itemStyle : {
+												normal : {
+													color : '#46bee9'
+												}
+											},
+											data : item
+													.map(function(dataItem) {
+														return {
+															name : dataItem[1].name,
+															value : geoCoordMap[dataItem[1].name]
+																	.concat([ dataItem[1].value ])
+														};
+													})
+										});
+					});
+		}
+
+		var years = [ "01:00", "03:00", "05:00", "07:00", "09:00", "11:00",
+				"13:00", "15:00", "17:00", "19:00", "21:00", "23:00" ];
+		var option = {
+			//        backgroundColor: '#404a59',
+			baseOption : {
+				timeline : {
+					axisType : 'category',
+					orient : 'vertical',
+					autoPlay : false,
+					inverse : true,
+					playInterval : 1000,
+					left : null,
+					right : 10,
+					top : 20,
+					bottom : 20,
+					width : 55,
+					height : null,
+					label : {
+						normal : {
+							textStyle : {
+								color : '#ddd'
+							}
+						},
+						emphasis : {
+							textStyle : {
+								color : '#fff'
+							}
+						}
+					},
+					symbol : 'none',
+					lineStyle : {
+						color : '#555'
+					},
+					checkpointStyle : {
+						color : '#bbb',
+						borderColor : '#777',
+						borderWidth : 2
+					},
+					controlStyle : {
+						showNextBtn : false,
+						showPrevBtn : false,
+						normal : {
+							color : '#666',
+							borderColor : '#666'
+						},
+						emphasis : {
+							color : '#aaa',
+							borderColor : '#aaa'
+						}
+					},
+					data : years
+				},
+
+				title : {
+					text : '快递路径线显示',
+					subtext : 'Develop By WanderGIS',
+					left : 'center',
+					textStyle : {
+						color : '#fff',
+					}
+				},
+
+				tooltip : {
+					trigger : 'item',
+					formatter : function(data) {
+						return '<div style="border-bottom: 1px solid #555;padding-bottom: 5px; margin-bottom: 5px;">'
+								+ '快递单号： '
+								+ data.data[2].LogisticCode
+								+ '</div>'
+								+ '出发地:  '
+								+ data.data[2].name
+								+ '<br>'
+								+ '结束地: '
+								+ data.data[3].name
+								+ '<br>'
+								+ '出发时间:  '
+								+ data.data[2].time
+								+ '<br>'
+								+ '到达时间:  ' + data.data[3].time;
+					}
+				},
+				legend : {
+					orient : 'vertical',
+					top : 'bottom',
+					left : 'right',
+					data : [ '北京 Top10', '上海 Top10', '广州 Top10' ],
+					textStyle : {
+						color : '#fff'
+					},
+					selectedMode : 'multiple'
+				},
+				geo : {
+					map : '',
+					label : {
+						emphasis : {
+							show : false
+						}
+					},
+					roam : true,
+					itemStyle : {
+						normal : {
+							areaColor : '#323c48',
+							borderColor : '#404a59'
+						},
+						emphasis : {
+							areaColor : '#2a333d'
+						}
+					}
+				},
+				series : []
+			},
+			options : []
+		};
+		for (var i = 0; i < 12; i++) {
+			option.options.push({
+				series : series[i]
+			});
+		}
+
+		// 使用刚指定的配置项和数据显示图表。
+		overlay.setOption(option);
 	</script>
 </body>
 </html>

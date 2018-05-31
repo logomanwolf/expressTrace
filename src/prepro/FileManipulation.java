@@ -57,7 +57,7 @@ public class FileManipulation implements IFile {
 		File file = new File("D:/junior/expressTrace/WebRoot/json/" + name);
 		try {
 			content = FileUtils.readFileToString(file, "gb2312");
-			System.out.println(name+": " + content);
+//			System.out.println(name+": " + content);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -72,7 +72,7 @@ public class FileManipulation implements IFile {
 		File file = new File("D:/junior/expressTrace/WebRoot/json/" + name);
 		try {
 			content = FileUtils.readFileToString(file, encoding);
-			//System.out.println(name+":" + content);
+			System.out.println(name+":" + content);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

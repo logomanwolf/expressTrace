@@ -240,7 +240,24 @@ public class AddressDao extends BaseDao {
 		}
 		return result;
 	}
-	
+	public List<String> selectFromLujing2ForD(String LogisticCode){
+		String sql ="SELECT distinct pathid FROM express.lujing2 where LogisticCode=?;";
+		List<String> result=new ArrayList<String>();
+		List<String> params = new ArrayList<String>();
+		params.add(LogisticCode);
+		ResultSet rs = this.executeQuery(sql, params);
+		try {
+			while (rs.next()) {
+				result.add(rs.getString("pathid"));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			this.close();
+		}
+		return result;
+	}
 	
 	
 	/*

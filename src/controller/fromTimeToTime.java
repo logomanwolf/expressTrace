@@ -19,6 +19,7 @@ import prepro.FileManipulation;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 
 import dao.AddressDao;
 
@@ -56,7 +57,7 @@ public class fromTimeToTime extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String ordermap = new FileManipulation().readJson("OrderMap.json",
+		/*String ordermap = new FileManipulation().readJson("OrderMap.json",
 				"utf-8");
 		String noRepeatPath = new FileManipulation().readJson(
 				"norepeatPath.json", "utf-8");
@@ -93,9 +94,27 @@ public class fromTimeToTime extends HttpServlet {
 			big.add(small);
 		}
 		new FileManipulation().WriteJson("wordtovec.json",
-				JSON.toJSONString(big));
-
-	}
+				JSON.toJSONString(big));*/
+		
+		//用来做所有路径的bundle
+		List<String> los=new AddressDao().selectAllLos();
+		System.out.println("los.size()="+los.size());;
+		
+		int wordvec[][]=new int[1000][1990];
+		for(int i=0;i<wordvec.length;i++){
+				//找出关键路径，0-1hot point
+			//keypath:表示那些是关键路径
+				List <String> keypath=new AddressDao().selectFromLujing2ForD(los.get(i));
+				for(int j=0;j<keypath.size();j++){
+				Integer index=Integer.parseInt(keypath.get(j));
+				System.out.println("index="+index);
+				wordvec[i][index]=1;
+				}
+		    }
+		new FileManipulation().WriteJson("hotpoint.json",
+				JSON.toJSONString(wordvec));
+		}
+	
 
 	/**
 	 * The doPost method of the servlet. <br>
